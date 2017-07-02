@@ -6,11 +6,20 @@ import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 public class DomParser {
@@ -41,6 +50,7 @@ public class DomParser {
 
 		}
 		System.out.println("Totalsum:" + totalsum);
+		erzeugeTotalsumKnoten();
 	}
 
 	public void anzeigenOrder(Node order) {
@@ -52,6 +62,7 @@ public class DomParser {
 		Node orderId = doc.getElementsByTagName("OrderID").item(0);
 		System.out.println("OrderID: "+orderId.getTextContent());
 		System.out.println();
+
 	}
 	public void anzeigenProdukt(Node produkt) {
 		NodeList produktdaten = produkt.getChildNodes();
@@ -65,7 +76,30 @@ public class DomParser {
 		System.out.println("Productsum: "+ sum);
 		System.out.println();
 	}
+	public void erzeugeTotalsumKnoten(){
+		Element neuerKnoten = doc.createElement("Totalsum");
+		Text text =doc.createTextNode(""+totalsum);
+		neuerKnoten.appendChild(text);
+		Node order =doc.getElementsByTagName("Order").item(0);
+		order.appendChild(neuerKnoten);
 
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer;
+		try {
+			transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File("neueOrder.xml"));
+			transformer.transform(source, result);
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 
 
