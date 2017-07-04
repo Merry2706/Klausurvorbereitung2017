@@ -36,4 +36,9 @@ public class Student {
 		this.nachname = nachname;
 	}
 
+	@Override
+	public String toString() {
+		return "Student [matrikelnummer=" + matrikelnummer + ", vorname=" + vorname + ", nachname=" + nachname + "]";
+	}
+
 }
