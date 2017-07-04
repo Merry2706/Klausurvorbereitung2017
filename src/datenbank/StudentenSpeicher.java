@@ -18,7 +18,7 @@ public class StudentenSpeicher {
 			conn = DriverManager.getConnection(url, "root", "root");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 	}
@@ -39,7 +39,7 @@ public class StudentenSpeicher {
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT * FROM studenten");
 			while (res.next()) {
-				studenten.add(new Student(res.getString(0), res.getString(1), res.getString(2)));
+				studenten.add(new Student(res.getString(1), res.getString(2), res.getString(3)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -49,17 +49,38 @@ public class StudentenSpeicher {
 		return studenten;
 	}
 
-	public void studentEinfuegen(Student neuerStudent) {
+	public void studentEinfuegen(Student student) {
 		datenbankverbinden();
 		try {
 			Statement stmt = conn.createStatement();
-			stmt.executeUpdate("INSERT INTO studenten VALUES ('" + neuerStudent.getMatrikelnummer() + "','"
-					+ neuerStudent.getVorname() + "','" + neuerStudent.getNachname() + "')");
+			stmt.executeUpdate("INSERT INTO studenten VALUES ('" + student.getMatrikelnummer() + "','"
+					+ student.getVorname() + "','" + student.getNachname() + "')");
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
+		datenbankSchliessen();
+	}
+	public void studentloeschen (String matrikelnummer) {
+		datenbankverbinden();
+		try {
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DELETE FROM studenten WHERE matrikelnummer = "+ matrikelnummer );
 
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		datenbankSchliessen();
+	}
+	public void aendernStudent(Student student) {
+		datenbankverbinden();
+		try {
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("UPDATE studenten SET vorname='"+student.getVorname()+"',nachname='"+student.getNachname()+"' WHERE matrikelnummer="+student.getMatrikelnummer() );
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		datenbankSchliessen();
 	}
 }
