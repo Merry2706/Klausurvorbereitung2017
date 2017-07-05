@@ -38,7 +38,27 @@ public class DomParser {
 		}
 	}
 
+	public Document getDocument() {
+		return doc;
+	}
 
+	public void testSenderName() {
+		NodeList names = doc.getElementsByTagName("Name");
+		for (int i = 0; i < names.getLength(); i++) {
+			Node parent = names.item(i).getParentNode();
+			if (parent.getNodeName().equals("Sender")) {
+				System.out.println(names.item(i).getTextContent());
+			}
+		}
+		/*
+		NodeList children = sender.getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
+				System.out.println(children.item(i).getNodeName());
+			}
+		}
+		 */
+	}
 
 	public void anzeigen () {
 		Node order = doc.getDocumentElement();
@@ -103,38 +123,21 @@ public class DomParser {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	public void anzeigenBeta (Node node, int stufe){
 		for (int i = 0; i < stufe; i++) {
 			System.out.print("   ");
 		}
-		if (!node.getNodeName().equals("#text")) {
-			System.out.print(node.getNodeName());
-		}
-		if (node.getNodeValue() != null) {
-			System.out.println(": " + node.getNodeValue());
+		System.out.print(node.getNodeName());
+		if (node.getChildNodes().getLength() == 1){
+			System.out.println(": " + node.getTextContent());
 		} else {
 			System.out.println();
 		}
 		NamedNodeMap att = node.getAttributes();
 		if (node.hasAttributes()) {
+			for (int i = 0; i < stufe; i++) {
+				System.out.print("   ");
+			}
 			for (int i=0; i< att.getLength();i++){
 				System.out.println(att.item(i).getNodeName() + ": " + att.item(i).getNodeValue());
 			}
@@ -143,9 +146,7 @@ public class DomParser {
 			stufe ++;
 			NodeList childNodes = node.getChildNodes();
 			for (int i=0; i < childNodes.getLength(); i++) {
-				if (node.getNodeType()== node.TEXT_NODE) {
-					anzeigenBeta(childNodes.item(i), stufe--);
-				} else {
+				if (childNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
 					anzeigenBeta(childNodes.item(i), stufe);
 				}
 

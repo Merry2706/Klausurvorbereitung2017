@@ -6,7 +6,9 @@ public class DomAusgabe {
 
 	public static void main(String[] args){
 		DomParser dom = new DomParser(new File("Order.xml"));
-		dom.anzeigen();
+		//dom.anzeigen();
+		//dom.anzeigenBeta(dom.getDocument(), 0);
+		dom.testSenderName();
 	}
 
 
