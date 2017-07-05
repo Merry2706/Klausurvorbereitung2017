@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Veranstaltungsliste SYSTEM "Vorlesung.dtd" >
+<Veranstaltungsliste>
+  <Veranstaltung>
+    <Name>Name</Name>
+    <Studienjahr>Studienjahr</Studienjahr>
+    <SWS>SWS</SWS>
+    <ECTS>ECTS</ECTS>
+    <Pruefungsleistung>Pruefungsleistung</Pruefungsleistung>
+    <Dozent>Dozent</Dozent>
+    <Veranstaltungsart kuerzel="">Veranstaltungsart</Veranstaltungsart>
+  </Veranstaltung>
+</Veranstaltungsliste>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT Veranstaltungsliste (Veranstaltung)+>
+<!ELEMENT Veranstaltung (Name,Studienjahr,SWS,ECTS,Pruefungsleistung,Dozent,Veranstaltungsart)>
+<!ELEMENT Name (#PCDATA)>
+<!ELEMENT Studienjahr (#PCDATA)>
+<!ELEMENT SWS (#PCDATA)>
+<!ELEMENT ECTS (#PCDATA)>
+<!ELEMENT Pruefungsleistung (#PCDATA)>
+<!ELEMENT Dozent (#PCDATA)>
+<!ELEMENT Veranstaltungsart (#PCDATA)>
+<!ATTLIST Veranstaltungsart kuerzel CDATA #REQUIRED>
+
+
+
